@@ -1,0 +1,33 @@
+﻿declarations:
+
+    states:  [A, K]
+    controls: [C, L]
+    shocks: [e_A]
+    parameters: [beta, phi, chi, delta, alpha, rho_A]
+
+
+equations:
+
+	arbitrage:
+        	- beta*C(+1)*(1-delta+A(+1)*L(+1)^alpha/K(+1))/ C  = 1   
+	        -  chi*L^phi=(1-alpha)*A*(K/L)^alpha/C
+
+	transition:
+        	- A = 1 + rho_A*(A(-1)-1) + e_A
+	        - K(+1)= (1-delta)*K-C+A*K^alpha*L^(1-alpha)
+
+
+
+calibration:
+
+	parameters:
+		beta : 0.96
+		phi: 1
+		chi : 4
+		delta : 0.25      
+		alpha : 0.33      
+		rho_A : 0.9
+      
+            
+
+
