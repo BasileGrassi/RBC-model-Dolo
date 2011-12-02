@@ -1,0 +1,51 @@
+\documentclass[11pt]{article}
+%\usepackage[utf8]{inputenc}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais,english]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+%\usepackage{fancyhdr}
+%\usepackage[nottoc, notlof, notlot]{tocbibind}
+\usepackage{geometry}
+\geometry{vmargin=1.5cm }
+\usepackage{graphicx}
+\usepackage{hyperref}
+%\usepackage[disable]{todonotes}
+
+
+\DeclareMathOperator*{\Max}{Max}
+\DeclareMathOperator*{\Argmax}{Argmax}
+\newcommand{\E}[1]{\mathbb{E}_{#1}}
+\newcommand{\dpp}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\ddpp}[2]{\frac{d #1}{d #2}}
+\newcommand{\ti}[1]{\widetilde{#1}}
+\newcommand{\wi}[1]{\widehat{#1}}
+\newcommand{\ub}[2]{\underbrace{#1}_{#2}}
+\newcommand{\ubt}[2]{\underbrace{#1}_{\text{#2}}}
+\newcommand{\oomega}[0]{\overline{\omega}}
+
+\newcommand{\nbas}[0]{\underline{\nu}}
+\newcommand{\nhaut}[0]{\overline{\nu}}
+
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{assumption}{Assumption}
+
+\setlength{\parindent}{20pt} \setlength{\parskip}{1ex plus 4.ex
+minus .2ex}
+\linespread{1.2}
+
+\begin{document}
+Centralized economy of the RBC model from the Florin Bilbiie lectures notes\footnote{This notes are available at \verb!http://sites.google.com/site/florinbilbiie/! }:
+\begin{align}
+C_t+K_{t+1}&=(1-\delta)K_t+A_tK_t^{\alpha}L_t^{1-\alpha}\\
+\frac{1}{C_t}&= \beta \E{t} \Big[\frac{1-\delta+\alpha A_{t+1}\big(\frac{L_{t+1}}{K_{t+1}}\big)^{1-\alpha} }{C_{t+1}} \Big]\\
+\chi L_t^{\alpha}&=(1-\alpha)\frac{A_t\big(\frac{K_{t}}{L_{t}}\big)^{\alpha}}{C_t}
+\end{align}
+
+\end{document}
