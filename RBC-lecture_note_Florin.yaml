@@ -16,7 +16,7 @@ equations:
 
    transition:
       - A = 1 + rho_A*(A(-1)-1) + e_A
-      - K(+1)= (1-delta)*K-C+A*K^alpha*L^(1-alpha)
+      - K(+1) = (1-delta)*K-C+A*K^alpha*L^(1-alpha)
 
    expectation:
       - Eh = beta*C(+1)*(1-delta+A(+1)*L(+1)^alpha/K(+1))/ C
