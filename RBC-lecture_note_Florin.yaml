@@ -19,7 +19,7 @@ equations:
       - K = (1-delta)*K(-1)-C(-1)+A(-1)*K(-1)^alpha*L(-1)^(1-alpha)
 
    expectation:
-      - Eh = beta*C(1)*(1-delta+A(1)*L(1)^alpha/K(1))/ C
+      - Eh = beta*C/C(1)*(1-delta+A(1)*alpha*(L(1)/K(1))^(1-alpha))
 
 
 
@@ -37,4 +37,13 @@ calibration:
       
             
 
+   steady_state:
+      A: 1
+      K: 2
+      L: 3
+      C: 4
+      L: 5
+      Eh: 1
 
+   covariances: |
+      [ [ 0.01 ] ]
