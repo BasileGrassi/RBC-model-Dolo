@@ -3,7 +3,6 @@ declarations:
    states:  [z, k]
    controls: [c, n]
    expectations: [Eh]
-   auxiliaries: [rk,w,nsurk]
    shocks: [e_z]
 
    parameters: [beta, sigma, eta, chi, delta, alpha, rho, zbar]
@@ -13,19 +12,15 @@ equations:
 
    arbitrage:
       - Eh = 1                              | 0 <= c <= inf
-      - w=chi*n^eta*c^sigma                 | 0 <= n <= inf
+      - (1-alpha)*z*(k/n)^(alpha)=chi*n^eta*c^sigma                 | 0 <= n <= inf
 
    transition:
       - z = (1-rho)*zbar + rho*z(-1) + e_z
-      - k = (1-delta+rk)*k(-1)-c(-1)
+      - k = (1-delta+alpha*z*(n/k)^(1-alpha))*k(-1)-c(-1)
 
-   auxiliary:
-      - rk=alpha*z*(n/k)^(1-alpha)
-      - w=(1-alpha)*z*(k/n)^(alpha)
-      - nsurk=n/k
 
    expectation:
-      - Eh = beta*(c/c(1))^(sigma)*(1-delta+rk(1))
+      - Eh = beta*(c/c(1))^(sigma)*(1-delta+alpha*z(1)*(n(1)/k(1))^(1-alpha))
 
 
 
@@ -41,7 +36,7 @@ calibration:
       chi : 4
       delta : 0.025      
       alpha : 0.33      
-      rho_z : 0.95
+      rho : 0.95
       sigma: 1
       eta: 1
       zbar: 1
@@ -49,13 +44,11 @@ calibration:
          
    steady_state:
       z: zbar
-      rk: 1/beta-1+delta    
-      nsurk: (rk/(alpha*z))^(1/(1-alpha))
-      w: (1-alpha)*z*(nsurk)^(-alpha)
-      n: (w/((rk-delta)*chi)*nsurk)^(1/(eta+1))
-      k: 1/nsurk*n
-      c: (rk-delta)*k
+      n: 2
+      k: 9
+      c: 7
       Eh: 1
+
 
 
    covariances: |
