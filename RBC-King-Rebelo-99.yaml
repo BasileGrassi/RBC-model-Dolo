@@ -1,44 +1,59 @@
 declarations:
 
-    states:  [A, K]
-    controls: [C, L]
-%    expectations: [eh, eW]
-    shocks: [e_A]
-    parameters: [beta, phi, chi, delta, alpha, rho_A]
+   states:  [z, k]
+   controls: [c, n]
+   expectations: [Eh]
+   auxiliary: [rk,w,nsurk]
+   shocks: [e_z]
+
+   parameters: [beta, sigma, eta, chi, delta, alpha, rho, zbar]
 
 
 equations:
 
-    arbitrage:
-        - beta*eh*C(+1)*(1-delta+A(+1)*L(+1)^alpha/K(+1))/ C  = 1     |   0 <= c <= w
-        - c^(1-gamma)/(1-gamma) + beta*eW = Welf              |   -inf <=  Welf <= inf
+   arbitrage:
+      - Eh = 1                              | 0 <= c <= inf
+      - w=chi*n^eta*c^sigma                 | 0 <= n <= inf
 
-    transition:
-        - A = 1 + rho_A*(A(-1)-1) + e_A
-        - w = (w(-1)-c(-1))^(theta)*(  1 + rho_A*(A(-1)-1) + e_A   )  + 1
+   transition:
+      - z = (1-rho)*zbar + rho*z(-1) + e_z
+      - k = (1-delta+rk)*k(-1)-c(-1)
 
-    expectation:
-        - eh = c(1)^(-gamma)*A(1)
-        - eW = Welf(1)
+   expectation:
+      - Eh = beta*(c/c(1))^(sigma)*(1-delta+rk(1))
+
+   auxiliary:
+      - rk=alpha*z*(n/k)^(1-alpha)
+      - w=(1-alpha)*z*(k/n)^(alpha)
+
+
+
 
 calibration:
 
-  parameters:
-      beta : 0.96
-      gamma : 4.0
-      rho_A : 0.9
-      rho_r : 0.5
-      rbar : 1.0
-      ybar : 1.0
-      theta : 0.3
+   parameters:
 
-  steady_state:
-    A: 1
-    w: ((1/beta/theta)^(1/(theta-1)))^theta + 1
-    c: w - (1/beta/theta)^(1/(theta-1))
-    eh: c^(-gamma)
-    Welf: c^(1-gamma)/(1-gamma)/(1-beta)
-    eW: Welf
+      beta : 0.99
+      phi: 1
+      chi : 4
+      delta : 0.025      
+      alpha : 0.33      
+      rho_z : 0.95
+      sigma: 1
+      eta: 1
+      zbar: 1
+      
+         
+steady_state:
+    z: zbar
+    rk: 1/beta-1+delta    
+    nsurk: (rk/(alpha*z))^(1/(1-alpha))
+    w: (1-alpha)*z*(nsurk)^(-alpha)
+    n: (w/((rk-delta)*chi)*nsurk)^(1/(eta+1))
+    k: 1/nsurk*n
+    c: (rk-delta)*k
+    Eh: 1
 
-  covariances: |
+
+covariances: |
     [ [ 0.01 ] ]

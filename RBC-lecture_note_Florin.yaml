@@ -27,6 +27,7 @@ equations:
 calibration:
 
    parameters:
+
       beta : 0.96
       phi: 1
       chi : 4
