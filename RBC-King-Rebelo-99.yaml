@@ -3,7 +3,7 @@ declarations:
    states:  [z, k]
    controls: [c, n]
    expectations: [Eh]
-   auxiliaries: [rk,w,nsurk]
+   auxiliary: [rk,w,nsurk]
    shocks: [e_z]
 
    parameters: [beta, sigma, eta, chi, delta, alpha, rho, zbar]
@@ -12,8 +12,8 @@ declarations:
 equations:
 
    arbitrage:
-      - Eh = 1                              | 0 <= c <= inf
-      - w=chi*n^eta*c^sigma                 | 0 <= n <= inf
+      - Eh - 1                              | 0 <= c <= inf
+      - w - chi*n^eta*c^sigma               | 0 <= n <= inf
 
    transition:
       - z = (1-rho)*zbar + rho*z(-1) + e_z
@@ -26,10 +26,6 @@ equations:
 
    expectation:
       - Eh = beta*(c/c(1))^(sigma)*(1-delta+rk(1))
-
-
-
-
 
 
 calibration:
