@@ -3,10 +3,10 @@ declarations:
    states:  [z, k]
    controls: [c, n]
    expectations: [Eh]
-   auxiliary: [rk,w,nsurk]
+   auxiliary: [rk,w]
    shocks: [e_z]
 
-   parameters: [beta, sigma, eta, chi, delta, alpha, rho, zbar]
+   parameters: [beta, sigma, eta, chi, delta, alpha, rho, zbar, nsurk]
 
 
 equations:
@@ -22,7 +22,7 @@ equations:
    auxiliary:
       - rk=alpha*z*(n/k)^(1-alpha)
       - w=(1-alpha)*z*(k/n)^(alpha)
-      - nsurk=n/k
+      
 
    expectation:
       - Eh = beta*(c/c(1))^(sigma)*(1-delta+rk(1))
@@ -41,7 +41,7 @@ calibration:
       sigma: 1
       eta: 1
       zbar: 1
-      
+      nsurk: n/k
          
    steady_state:
       z: zbar
