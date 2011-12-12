@@ -6,13 +6,13 @@ declarations:
    auxiliary: [c, rk, w]
    shocks: [e_z]
 
-   parameters: [beta, sigma, eta, chi, delta, alpha, rho, zbar, nsurk]
+   parameters: [beta, sigma, eta, chi, delta, alpha, rho, zbar ]
 
 
 equations:
 
    arbitrage:
-      - Eh - 1                              | 0 <= c <= inf
+      - Eh - 1                              | 0 <= i <= inf
       - w - chi*n^eta*c^sigma               | 0 <= n <= inf
 
    transition:
@@ -42,16 +42,15 @@ calibration:
       sigma: 1
       eta: 1
       zbar: 1
-      nsurk: n/k
          
    steady_state:
       z: zbar
       rk: 1/beta-1+delta    
-      nsurk: (rk/(alpha*z))^(1/(1-alpha))
-      w: (1-alpha)*z*(nsurk)^(-alpha)
-      n: (w/((rk-delta)*chi)*nsurk)^(1/(eta+1))
-      k: 1/nsurk*n
-      c: (rk-delta)*k
+      w: (1-alpha)*z*(k/n)^(alpha)
+      n: 0.33
+      k: 9.35
+      i: delta*k
+      c: z*k^alpha*n^(1-alpha) - i
       Eh: 1
 
 
