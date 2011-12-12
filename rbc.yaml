@@ -37,7 +37,7 @@ calibration:
       chi : 4
       delta : 0.025      
       alpha : 0.33      
-      rho_z : 0.95
+      rho : 0.95
       sigma: 1
       eta: 1
       zbar: 1
