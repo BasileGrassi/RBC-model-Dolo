@@ -1,9 +1,9 @@
 declarations:
 
    states:  [z, k]
-   controls: [c, n]
+   controls: [i, n]
    expectations: [Eh]
-   auxiliary: [rk,w]
+   auxiliary: [c, rk, w]
    shocks: [e_z]
 
    parameters: [beta, sigma, eta, chi, delta, alpha, rho, zbar, nsurk]
@@ -17,11 +17,12 @@ equations:
 
    transition:
       - z = (1-rho)*zbar + rho*z(-1) + e_z
-      - k = (1-delta+rk)*k(-1)-c(-1)
+      - k = (1-delta)*k(-1) + i(-1)
 
    auxiliary:
-      - rk=alpha*z*(n/k)^(1-alpha)
-      - w=(1-alpha)*z*(k/n)^(alpha)
+      - c = z*k^alpha*n^(1-alpha) - i
+      - rk = alpha*z*(n/k)^(1-alpha)
+      - w = (1-alpha)*z*(k/n)^(alpha)
       
 
    expectation:
