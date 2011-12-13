@@ -60,17 +60,17 @@ nbar=0.33;
 
     
     
-    k = linspace(8,10,nk);
+    k = linspace(kbar*0.95,kbar*1.05,nk);
     kmin=min(k);
     kmax=max(k);
     %For aggregate productivity
     
     zpas=0.00025;
 
-    z=[zbar-(floor(nz/2):-1:1).*zpas, zbar, zbar+(1:floor(nz/2)).*zpas];
-    nz=size(z,2);
+    z = linspace(0.95, 1.05, nz);
     zmin=min(z);
     zmax=max(z);
+    
     
     %Compute the grid
     grid=gridmake(z',k');
@@ -90,7 +90,7 @@ e=zeros(n_s,2);
 
 
 % Convergence criterion
-tol=1e-6;
+tol=1e-10;
 maxiteration=100;
 options=optimset('MaxIter',1E5,'MaxFunEvals',1E5,'Display','iter');
 
@@ -112,9 +112,9 @@ converge=0;
 
 tic;
 
-N_shocks = 30;
-sigma = [[0.0035]];
-epsilons = normrnd(0,sigma, N_shocks,1);
+N_shocks = 10;
+Sigma = [[0.0025^2]];
+epsilons = normrnd(0,Sigma, N_shocks,1);
 weights = ones(N_shocks,1)/N_shocks;
 
 
