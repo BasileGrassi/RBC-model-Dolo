@@ -66,57 +66,30 @@ nbar=0.33;
     
     
 %% Iterate
-%Definied interpolators
-order=[nz nk];
-gridmin=[zmin kmin];
-gridmax=[zmax kmax];
-cdef=fundefn('lin',order,gridmin,gridmax);
+    %Definied interpolators
+        order=[nz nk];
+        gridmin=[zmin kmin];
+        gridmax=[zmax kmax];
+        cdef=fundefn('lin',order,gridmin,gridmax);
 
-%Deterministic case
-e=zeros(25,2);
-
-
-% Convergence criterion
-tol=1e-3;
-maxiteration=100;
-options=optimset('MaxIter',1E5,'MaxFunEvals',1E5);
-
-%Initialisation
-iinit=delta*kbar;
-ninit=0.33;
-xinit=[iinit*ones(25,1) ninit*ones(25,1)];
-
-x=xinit;
+    %Deterministic case
+        e=zeros(25,2);
 
 
-iteration=1;
-converge=0;
+    %Convergence criterion
+        tol=1e-3;
+        maxiteration=100;
+        options=optimset('MaxIter',1E5,'MaxFunEvals',1E5,'Display','Iter');
 
-while converge==0,
-    
-    
-    
-    
-    snext=G_rbc(grid,x,e,model);
-    
-    [coeff,B]=funfitxy(cdef,grid,x);
-    xnext=funeval(coeff, cdef, snext);
+    %Initialisation
+        iinit=delta*kbar;
+        ninit=0.33;
+        xinit=[iinit*ones(25,1) ninit*ones(25,1)];
 
-    
-    
-    %x_up=fsolve(@(xt) F_rbc(grid,xt,e,G_rbc(grid,xt,e,model),xnext,model),x,options);
-    x_up=fsolve(@(xt) F_rbc(grid,xt,e,snext,xnext,model),x,options);
-    
-    err=sum(sum(abs(x-x_up)))
-    
-   
-    
-    if (err < tol && iteration < maxiteration);
-        converge=1;
-    end;
-    
-    x=x_up
-    iteration = iteration+1;
-    display([iteration err]);
-end;
+
+    %Solving the model
+        tic
+        x=fsolve(@(x) Residual(grid,x,@F_rbc,@G_rbc,cdef,model),xinit,options);
+        toc
+
 
