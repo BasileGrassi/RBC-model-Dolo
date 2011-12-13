@@ -43,7 +43,7 @@ nbar=0.33;
 %% Defined the grid
     %For capital stock k
     kbar= nbar.*((1/beta-1+delta)/(alpha))^(1/(alpha-1));
-    kpas=0.0001;
+    kpas=0.01;
     nk=5;
 
 
@@ -53,7 +53,7 @@ nbar=0.33;
     kmax=max(k);
     %For aggregate productivity
     
-    zpas=0.00025;
+    zpas=0.025;
     nz=5;
 
     z=[zbar-(floor(nz/2):-1:1).*zpas, zbar, zbar+(1:floor(nz/2)).*zpas];
@@ -62,14 +62,14 @@ nbar=0.33;
     zmax=max(z);
     
     %Compute the grid
-    grid=gridmake(k',z');
+    grid=gridmake(z',k');
     
     
 %% Iterate
 %Definied interpolators
-order=[nk nz];
-gridmin=[kmin zmin];
-gridmax=[kmax zmax];
+order=[nz nk];
+gridmin=[zmin kmin];
+gridmax=[zmax kmax];
 cdef=fundefn('lin',order,gridmin,gridmax);
 
 %Deterministic case
@@ -107,7 +107,7 @@ while converge==0,
     %x_up=fsolve(@(xt) F_rbc(grid,xt,e,G_rbc(grid,xt,e,model),xnext,model),x,options);
     x_up=fsolve(@(xt) F_rbc(grid,xt,e,snext,xnext,model),x,options);
     
-    err=sum(sum(abs(x-x_up)));
+    err=sum(sum(abs(x-x_up)))
     
    
     
@@ -115,7 +115,7 @@ while converge==0,
         converge=1;
     end;
     
-    x=x_up;
+    x=x_up
     iteration = iteration+1;
     display([iteration err]);
 end;
