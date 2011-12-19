@@ -1,0 +1,91 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais,english]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+%\usepackage[nottoc, notlof, notlot]{tocbibind}
+\usepackage{geometry}
+%\geometry{ hmargin=3.2cm, vmargin=4cm }
+%\usepackage{graphicx}
+\usepackage{hyperref}
+
+\DeclareMathOperator*{\Max}{Max}
+\DeclareMathOperator*{\Argmax}{Argmax}
+\newcommand{\E}[1]{\mathbb{E}_{#1}}
+\newcommand{\dpp}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\ddpp}[2]{\frac{d #1}{d #2}}
+\newcommand{\ti}[1]{\widetilde{#1}}
+\newcommand{\ub}[2]{\underbrace{#1}_{#2}}
+\newcommand{\ubt}[2]{\underbrace{#1}_{\text{#2}}}
+\newcommand{\oomega}[0]{\overline{\omega}}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{assumption}{Assumption}
+
+\setlength{\parindent}{20pt}
+\setlength{\parskip}{1ex plus 4.ex minus .2ex}
+%\linespread{1.2}
+
+
+
+\title{Help File for Dolo}
+
+\author{Basile Grassi\footnote{Paris School of Economics and Universit\'e Paris I Panth\'eon-Sorbonne}~ and Pablo Winant\footnote{Paris School of Economics}}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{The \texttt{YAML} file: describe the model}
+
+\section{The matlab file}
+Assuming that your model'matlab file is called \texttt{baseline-model.m}.
+
+By runing the comande:
+
+\texttt{>> model=baseline-model.m}
+
+you will get a structure which contains all the information about your model describe in your yaml file. The model is given as:
+\begin{align*}
+s_{+1} &= G(s,x,\varepsilon) \tag{Transition}\label{Transition}\\
+\E{t}&[F(s,x,\varepsilon,s_{+1},x_{+1}]=0 \tag{Arbitrage}\label{Arbitrage}
+\end{align*}
+
+This structure is organize as follow:
+\begin{itemize}
+	\item \texttt{model.s\_ss}: Steaty-state value of state variables.
+	\item \texttt{model.x\_ss}: Steaty-state value of control variables.
+	\item \texttt{model.params}: Value of parameters in a array. The order is the same as in the declaration of parameters in the asociated yaml file.
+	\item \texttt{model.X}: Perturbation method decision rule. One can find the value of the control variable around the steady-state using the following formula:
+	\begin{equation*}
+	x_t=x_{ss}+ X(s_t-s_{ss})
+	\end{equation*}
+	\item \texttt{model.f}: Matlab function which give you the function $F$ used in (\ref{Arbitrage}). The function could be call with the following syntax:
+	
+	 \begin{center} \texttt{f(s,x,s$_{+1}$,x$_{+1}$,p)} where \texttt{p} stend for the parameters of the model.\end{center}
+	 
+	 One will get the value of the function and the value of the derivative. The output is given as 
+	 
+	 \begin{center} \texttt{[F,F$_s$,F$_x$,F$_{s_{+1}}$,F$_{x_{+1}}$]=f(s,x,s$_{+1}$,x$_{+1}$,p)}\end{center} 
+	 where \texttt{F$_s$,F$_x$,F$_{s_{+1}}$,F$_{x_{+1}}$} are the derivatives with respect to the states, the controls, the next period states and the next period controls respectively.
+	
+	\item \texttt{model.g}: Matlab function which give you the function $G$ used in (\ref{Transition}). The function could be call with the following syntax:
+	
+		 \begin{center} \texttt{g(s,x,e,p)} where \texttt{p} stend for the parameters of the model.\end{center}
+	
+		 One will get the value of the function and the value of the derivative. The output is given as 
+	 
+	 \begin{center} \texttt{[G,G$_s$,G$_x$]=g(s,x,p)}\end{center}
+	 where \texttt{G$_s$,G$_x$} are the derivatives with respect to the states and the controls respectively.
+	
+	
+	\end{itemize}
+
+\end{document}
