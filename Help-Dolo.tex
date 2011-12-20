@@ -60,8 +60,8 @@ s_{+1} &= G(s,x,\varepsilon) \tag{Transition}\label{Transition}\\
 
 This structure is organize as follow:
 \begin{itemize}
-	\item \texttt{model.s\_ss}: Steaty-state value of state variables.
-	\item \texttt{model.x\_ss}: Steaty-state value of control variables.
+	\item \texttt{model.s\_ss}: Steaty-state value of state variables, ordered as in the yaml file.
+	\item \texttt{model.x\_ss}: Steaty-state value of control variables, ordered as in the yaml file.
 	\item \texttt{model.params}: Value of parameters in a array. The order is the same as in the declaration of parameters in the asociated yaml file.
 	\item \texttt{model.X}: Perturbation method decision rule. One can find the value of the control variable around the steady-state using the following formula:
 	\begin{equation*}

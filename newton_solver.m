@@ -6,7 +6,7 @@ function [x] = newton_solve(fun, x0)
     tol = 1e-8;
     
     err = 1;
-    maxit = 50;
+    maxit = 1;
     it = 0;
     
     while err > tol && it < maxit

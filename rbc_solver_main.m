@@ -10,7 +10,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%addpath('D:\Users\Utilisateur\Documents\MATLAB\COMPECON\CEtools');
+addpath('D:\Users\Utilisateur\Documents\MATLAB\COMPECON\CEtools');
 
 %% Parameters
 none=[];
@@ -91,7 +91,7 @@ e=zeros(n_s,2);
 
 % Convergence criterion
 tol=1e-10;
-maxiteration=100;
+maxiteration=1000;
 options=optimset('MaxIter',1E5,'MaxFunEvals',1E5,'Display','iter');
 
 %Initialisation
@@ -112,14 +112,21 @@ converge=0;
 
 tic;
 
-N_shocks = 10;
-Sigma = [[0.0025^2]];
-epsilons = normrnd(0,Sigma, N_shocks,1);
-weights = ones(N_shocks,1)/N_shocks;
+integration='hermite';
+switch integration;
+    case 'naive';
+    N_shocks = 10;
+    Sigma = [[0.0025^2]];
+    epsilons = normrnd(0,Sigma, N_shocks,1);
+    weights = ones(N_shocks,1)/N_shocks;
 
-
-
-
+    case 'hermite';
+    N_shocks = 5;
+    [epsi,w]=hernodes(N_shocks);
+    Sigma = [[0.0025]];
+    epsilons = 0+Sigma*sqrt(2)*epsi;
+    weights=w;
+end;
 
 
 disp('Starting iterations');
